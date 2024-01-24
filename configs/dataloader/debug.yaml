@@ -1,0 +1,6 @@
+defaults:
+  - default
+
+fresh: True
+deterministic: True
+shuffle: False

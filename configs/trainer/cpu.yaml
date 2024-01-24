@@ -1,0 +1,7 @@
+defaults:
+  - default
+
+strategy:
+  _target_: pytorch_lightning.strategies.DDPStrategy
+accelerator: cpu
+devices: 1

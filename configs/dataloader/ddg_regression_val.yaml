@@ -1,0 +1,11 @@
+defaults:
+  - default
+
+_pretransform:
+  ddg_label:
+    _target_: ppiformer.data.transforms.DDGLabelPretransform
+    df: null
+    strict_wt: true
+_prefilter:
+  ddg_label:
+    _target_: ppiformer.data.transforms.DDGLabelFilter

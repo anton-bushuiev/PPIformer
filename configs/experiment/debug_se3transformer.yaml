@@ -1,0 +1,9 @@
+# @package _global_
+
+defaults:
+  - debug_pretraining
+  - override /trainer: ddp_spawn
+  - override /model/encoder: se3transformer
+
+trainer:
+  devices: 2

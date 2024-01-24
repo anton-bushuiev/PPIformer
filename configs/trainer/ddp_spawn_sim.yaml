@@ -1,0 +1,8 @@
+defaults:
+  - default
+
+# simulate DDP on CPU, useful for debugging
+strategy:
+  _target_: pytorch_lightning.strategies.DDPSpawnStrategy
+accelerator: cpu
+devices: 2

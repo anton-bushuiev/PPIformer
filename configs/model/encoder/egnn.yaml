@@ -1,0 +1,10 @@
+_target_: ppiformer.model.egnn_clean.EGNN
+
+in_node_nf: ${..input_dim.0}
+hidden_nf: ${..hidden_dim}
+out_node_nf: ${..embedding_dim}
+n_layers: 7
+update_coords: True
+attention: True
+normalize: True  # experimental
+tanh: False  # experimental

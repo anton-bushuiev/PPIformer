@@ -1,0 +1,10 @@
+defaults:
+  - default
+
+strategy:
+  _target_: pytorch_lightning.strategies.DDPStrategy
+accelerator: gpu
+devices: 8
+num_nodes: 1
+use_distributed_sampler: true
+# sync_batchnorm: True

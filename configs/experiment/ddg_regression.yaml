@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - override /trainer: ddp
+  - override /model: ddg_regression
+  - override /model/encoder: equiformer
+  - override /dataloader@train_dataloader:
+    - train
+    - ddg_regression_train
+  - override /dataloader@val_dataloader:
+    - val
+    - ddg_regression_val
+
+train_dataloader:
+  dataset: ???
+  batch_size: ???
+val_dataloader:
+  dataset: ???
+  batch_size: ???
+
+trainer:
+  log_every_n_steps: 8
+  val_check_interval: 1.0
+  check_val_every_n_epoch: 2
+
+project_name: "DDG_REGRESSION"
+run_name: "no_name_run"

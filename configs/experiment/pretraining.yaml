@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+  # NOTE: ddp_spawn may be better for bigger data because of boundary sharing
+  - override /trainer: ddp  
+  - override /model: ssl
+  - override /model/encoder: equiformer
+  - override /dataloader@train_dataloader:
+    - train
+    - ssl
+  - override /dataloader@val_dataloader:
+    - val
+    - ssl
+    - ddg_regression_val
+
+train_dataloader:
+  dataset: "ppiref_filtered_clustered_03,whole"
+  batch_size: 8
+val_dataloader:
+  dataset: "skempi2_iclr24_split,0+1"
+  batch_size: 8
+
+project_name: "PRETRAINING"
+run_name: "no_name_run"

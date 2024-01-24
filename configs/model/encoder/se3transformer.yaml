@@ -1,0 +1,22 @@
+_target_: se3_transformer.model.SE3Transformer
+
+fiber_in:
+  _target_: se3_transformer.model.fiber.Fiber
+  _convert_: "all"
+  structure:
+    0: ${model.input_dim.0}
+    1: ${model.input_dim.1}
+fiber_hidden:
+  _target_: se3_transformer.model.fiber.Fiber.create
+  num_degrees: ${model.hidden_degree}
+  num_channels: ${model.hidden_dim}
+fiber_out:
+  _target_: se3_transformer.model.fiber.Fiber
+  _convert_: "all"
+  structure:
+    0: ${model.embedding_dim}
+num_layers: 7
+num_heads: 8
+channels_div: 2
+norm: True
+use_layer_norm: True

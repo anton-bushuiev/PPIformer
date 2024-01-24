@@ -1,0 +1,13 @@
+_target_: equiformer_pytorch.Equiformer
+dim: [128, 64]
+dim_in: ${..input_dim}
+num_degrees: 2
+input_degrees: 2
+heads: 2
+dim_head: [32, 16]
+depth: 2
+valid_radius: 8  # 32 / 4.0 (EquiFold value / RFdiffusion coord normalization)
+num_neighbors: 10
+num_edge_tokens: 2
+edge_dim: 16
+gate_attn_head_outputs: False  # TODO Set to true in new trainings (now False for compatibility)

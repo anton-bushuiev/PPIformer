@@ -1,0 +1,16 @@
+_target_: pytorch_lightning.Trainer
+
+strategy:
+  _target_: ???
+  find_unused_parameters: true  # TODO Debug Equiformer and set to false
+accelerator: ???
+devices: ???
+max_epochs: -1
+log_every_n_steps: 100
+val_check_interval: 0.33
+check_val_every_n_epoch: 1
+num_sanity_val_steps: 0
+accumulate_grad_batches: 1
+detect_anomaly: false
+gradient_clip_val: null
+gradient_clip_algorithm: null

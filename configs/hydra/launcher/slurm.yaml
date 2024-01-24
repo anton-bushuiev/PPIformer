@@ -1,0 +1,8 @@
+defaults:
+  - submitit_slurm
+
+partition: "standard-g"
+account: "project_465000662"
+
+gpus_per_node: 8
+timeout_min: 1440

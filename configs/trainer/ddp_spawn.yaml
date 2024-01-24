@@ -1,0 +1,11 @@
+defaults:
+  - default
+
+# strategy:
+  # _target_: pytorch_lightning.strategies.DDPSpawnStrategy
+strategy: ddp_spawn_find_unused_parameters_true
+accelerator: gpu
+devices: 8
+num_nodes: 1
+use_distributed_sampler: true
+# sync_batchnorm: True

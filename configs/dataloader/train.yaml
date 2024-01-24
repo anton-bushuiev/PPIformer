@@ -1,0 +1,8 @@
+defaults:
+  - default
+
+# _pretransform:
+#   clean:
+#     _target_: ppiformer.data.transforms.CleanPretransform
+
+shuffle: True

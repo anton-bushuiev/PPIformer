@@ -1,0 +1,38 @@
+defaults:
+  - encoder: equiformer
+
+_target_: ???  # Should be defined by specific task
+
+# TODO Add feature dir for feature configs?
+input_dim: [20, 1]  # Dimensions per feature equivariance type
+hidden_dim: 32
+hidden_degree: 2
+# embedding_dim: 512
+embedding_dim: 128
+
+classifier:
+  _target_: torch_geometric.nn.MLP
+  in_channels: ${..embedding_dim}
+  hidden_channels: ${..embedding_dim}
+  out_channels: 20
+  num_layers: 1
+  # classifier_norm: 'none'
+  # classifier_dropout: 0.0
+
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 1e-3
+  weight_decay: 0.0
+
+# Equiformer-specific
+pre_encoder_transform_kwargs:
+  divide_coords_by: 4.0
+  intra_inter_edge_features: true
+  coord_fill_value: 0.000001
+
+# TODO Schedulers including Noam
+
+verbose: false
+
+checkpoint_path: null

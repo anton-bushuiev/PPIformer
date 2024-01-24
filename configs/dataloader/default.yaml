@@ -1,0 +1,33 @@
+_target_: ppiformer.data.loader.get_dataloader
+_convert_: "all"
+
+# Data transforms
+# NOTE: The pretransforms, filters and transforms are configured by
+# concatentaing lists using the trick suggested in
+# https://github.com/facebookresearch/hydra/issues/1939
+# which firstly concats dicts with dummy keys and thgen extracts the values.
+_pretransform:
+  pdb_to_pyg:
+    _target_: ppiformer.data.transforms.PDBToPyGPretransform
+    k: null
+    type1_features:
+      - 'virtual_c_beta_vector'
+      - 'sequence_neighbour_vector_n_to_c'
+      - 'sequence_neighbour_vector_c_to_n'
+_prefilter: {}
+_transform: {}
+pretransform: ${oc.dict.values:._pretransform}
+prefilter: ${oc.dict.values:._prefilter}
+transform: ${oc.dict.values:._transform}
+
+# Dataset
+dataset: ???
+fresh: False
+deterministic: False
+verbose: True
+dataset_max_workers: null
+
+# Dataloader
+shuffle: ???
+batch_size: 2  # Currently low for Equiformer due to DTP
+num_workers: 0

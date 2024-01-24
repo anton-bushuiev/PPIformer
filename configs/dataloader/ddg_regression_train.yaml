@@ -1,0 +1,17 @@
+defaults:
+  - default
+
+_pretransform:
+  ddg_label:
+    _target_: ppiformer.data.transforms.DDGLabelPretransform
+    df: null
+    strict_wt: true
+_prefilter:
+  ddg_label:
+    _target_: ppiformer.data.transforms.DDGLabelFilter
+_transform:
+  deep_copy:
+    _target_: ppiformer.data.transforms.DeepCopyTransform
+  ddg_label_sampler:
+    _target_: ppiformer.data.transforms.DDGLabelSamplerTransform
+    n_samples: 1

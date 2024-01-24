@@ -1,0 +1,11 @@
+defaults:
+  - default
+
+_target_: ppiformer.tasks.ssl.MaskedModelingPPIformer
+label_smoothing: 0.0
+label_smoothing_prior: "uniform"
+log_accuracy_per_class: false
+val_ddg_kinds: ["wt_marginals", "masked_marginals"]
+focal_loss_gamma: 0.0
+class_weights: false
+# val_ddg_kinds: ["wt_marginals"]

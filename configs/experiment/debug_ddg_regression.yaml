@@ -1,0 +1,23 @@
+# @package _global_
+
+defaults:
+  - debug_pretraining
+  - override /model: ddg_regression
+  - override /dataloader@train_dataloader:
+    - train
+    - ddg_regression_train
+    - debug
+  - override /dataloader@val_dataloader:
+    - val
+    - ddg_regression_val
+    - debug
+
+train_dataloader:
+  dataset: "skempi2_iclr24_split,8"
+  batch_size: 8
+val_dataloader:
+  dataset: "skempi2_iclr24_split,8"
+  batch_size: 8
+
+project_name: "DDG_REGRESSION_DEBUG"
+run_name: "debug_run"

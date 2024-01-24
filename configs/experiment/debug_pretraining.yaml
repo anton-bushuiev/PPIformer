@@ -1,0 +1,33 @@
+# @package _global_
+
+defaults:
+  - override /trainer: cpu
+  - override /model: ssl
+  - override /model/encoder: egnn
+  - override /dataloader@train_dataloader:
+    - train
+    - ssl
+    - debug
+  - override /dataloader@val_dataloader:
+    - val
+    - ssl
+    - ddg_regression_val
+    - debug
+
+train_dataloader:
+  dataset: "ppiref_filtered_clustered_03,8"
+  batch_size: 8
+val_dataloader:
+  dataset: "skempi2_iclr24_split,8"
+  batch_size: 8
+
+trainer:
+  log_every_n_steps: 1
+  strategy:
+    find_unused_parameters: true
+  # replace_sampler_ddp: false
+  detect_anomaly: true
+
+# job_key: "debug_key"
+project_name: "PRETRAINING_DEBUG"
+run_name: "debug_run"

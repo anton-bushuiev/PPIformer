@@ -1,0 +1,7 @@
+defaults:
+  - default
+
+_target_: ppiformer.tasks.node.DDGPPIformer
+kind: "wt_marginals"
+test_csv_path: null  # path to output .csv file if testing
+correction: false

@@ -1,0 +1,10 @@
+defaults:
+  - default
+
+_transform:
+    masked_modeling:
+      _target_: ppiformer.data.transforms.MaskedModelingTransform
+      mask_ratio: null  # At 0.15 corresponds to BERT, ESM-1, ESM-2
+      mask_sum: 1
+      bert: False  # https://github.com/google-research/bert/blob/master/create_pretraining_data.py
+      same_chain: True  # All masked nodes are from the same chain
