@@ -12,15 +12,14 @@ PPIformer is a state-of-the-art predictor of the effects of mutations on protein
 
 Please do not hesitate to contact us or create an issue/PR if you have any questions or suggestions. ✌️
 
-<!-- ![dimer-close-up](https://github.com/anton-bushuiev/PPIformer/assets/67932762/5679f391-daac-4d2b-88c9-40621941ba74) -->
-
-<!-- trained on PPIRef -->
-
-<!-- PPIformer is a transformer-based model for protein-protein interaction (PPI) prediction. It is based on the [Transformer](https://arxiv.org/abs/1706.03762) architecture and uses the [ProtTrans](https://www.biorxiv.org/content/10.1101/2020.07.12.199554v1) model as a backbone. The model is trained on the [BioGRID](https://thebiogrid.org/) database and achieves state-of-the-art performance on the [PPI4DOCK]( -->
-
 # Installation
 
-To install PPIformer, clone this repository and install the environment (you may need to adjust the versions of the PyTorch-based packages in the script depending on your system):
+PPIformer is available on Hugging Face Spaces:
+
+[![Model on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-lg-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer)
+
+
+To install PPIformer locally, clone this repository and install the environment (you may need to adjust the versions of the PyTorch-based packages in the script depending on your system):
 ```bash
 git clone https://github.com/anton-bushuiev/PPIformer; cd PPIformer
 . scripts/installation/install.sh
@@ -36,8 +35,10 @@ from ppiformer.tasks.node import DDGPPIformer
 from ppiformer.utils.api import download_weights, predict_ddg
 from ppiformer.definitions import PPIFORMER_WEIGHTS_DIR, PPIFORMER_TEST_DATA_DIR
 
-# Load the ensamble of fine-tuned models
+# Download the weights
 download_weights()
+
+# Load the ensamble of fine-tuned models
 device = 'cpu'
 models = [DDGPPIformer.load_from_checkpoint(PPIFORMER_WEIGHTS_DIR / f'ddg_regression/{i}.ckpt', map_location=torch.device(device)).eval() for i in range(3)]
 
