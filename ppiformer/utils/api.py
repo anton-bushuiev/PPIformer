@@ -1,3 +1,6 @@
+import requests
+import zipfile
+import os
 from typing import Sequence, Union
 from pathlib import Path
 from io import StringIO
@@ -10,6 +13,35 @@ from omegaconf import OmegaConf
 from equiformer_pytorch.equiformer_pytorch import MLPAttention, L2DistAttention
 
 from ppiformer.tasks.node import DDGPPIformer
+from ppiformer.definitions import PPIFORMER_WEIGHTS_DIR
+
+
+def download_weights(
+    url: str = 'https://zenodo.org/records/10568463/files/ddg_regression.zip',
+    destination_folder: Union[Path, str] = PPIFORMER_WEIGHTS_DIR
+) -> None:
+    stem = Path(url).stem
+
+    # Create the destination folder if it doesn't exist
+    if not os.path.exists(destination_folder):
+        os.makedirs(destination_folder)
+
+    if (Path(destination_folder) / stem).is_dir():
+        return  # already downloaded
+
+    # Download the file
+    response = requests.get(url)
+    file_path = os.path.join(destination_folder, f'{stem}.zip')
+
+    with open(file_path, 'wb') as file:
+        file.write(response.content)
+
+    # Extract the contents of the zip file
+    with zipfile.ZipFile(file_path, 'r') as zip_ref:
+        zip_ref.extractall(destination_folder)
+
+    # Delete the zip file after extraction (optional)
+    os.remove(file_path)
 
 
 def predict_ddg(

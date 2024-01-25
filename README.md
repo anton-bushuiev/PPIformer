@@ -33,10 +33,11 @@ git clone https://github.com/anton-bushuiev/PPIformer; cd PPIformer
 ```python
 import torch
 from ppiformer.tasks.node import DDGPPIformer
-from ppiformer.utils.api import predict_ddg
+from ppiformer.utils.api import download_weights, predict_ddg
 from ppiformer.definitions import PPIFORMER_WEIGHTS_DIR, PPIFORMER_TEST_DATA_DIR
 
 # Load the ensamble of fine-tuned models
+download_weights()
 device = 'cpu'
 models = [DDGPPIformer.load_from_checkpoint(PPIFORMER_WEIGHTS_DIR / f'ddg_regression/{i}.ckpt', map_location=torch.device(device)).eval() for i in range(3)]
 
