@@ -12,12 +12,13 @@ PPIformer is a state-of-the-art predictor of the effects of mutations on protein
 
 Please do not hesitate to contact us or create an issue/PR if you have any questions or suggestions. ✌️
 
-# Installation
+# Web on Hugging Face Spaces 🤗
 
-PPIformer is available on Hugging Face Spaces:
+The preview of PPIformer is available via an interactive user interface on Hugging Face Spaces:
 
 [![Model on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-lg-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer)
 
+# Installation
 
 To install PPIformer locally, clone this repository and install the environment (you may need to adjust the versions of the PyTorch-based packages in the script depending on your system):
 ```bash
