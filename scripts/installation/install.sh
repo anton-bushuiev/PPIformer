@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Create env
-conda create -n ppiformer_u python==3.9.17 -y
+# conda create -n ppiformer_u python==3.9.17 -y
+conda create -n ppiformer_u python==3.10 -y
 conda activate ppiformer_u
 
 # Torch
@@ -12,7 +13,8 @@ pip install torch-scatter torch-sparse
 pip install pytorch_lightning==2.0.8
 
 # latest Graphein
-pip install git+https://github.com/a-r-j/graphein.git@master
+# pip install git+https://github.com/a-r-j/graphein.git@master
+pip install graphein==1.7.6
 
 # Forked equiformer to get attention coefficients
 pip install git+https://github.com/anton-bushuiev/equiformer-pytorch.git
