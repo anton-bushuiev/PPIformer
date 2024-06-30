@@ -295,7 +295,8 @@ class PPIformer(pl.LightningModule):
                 log_odds = self.predict_log_odds(data)
                 data.f = f
                 ddg_pred.append(log_odds[p, s].sum())
-                attns.append(self.encoder.last_forward_attn)
+                if return_attn:
+                    attns.append(self.encoder.last_forward_attn)
 
             elif kind in ['embedding_difference', 'embedding_concatenation']:  # baselines
                 feats_wt = torch.nn.functional.one_hot(w, num_classes=masker.vocab_size).float()
@@ -319,8 +320,8 @@ class PPIformer(pl.LightningModule):
                 raise ValueError(f'Wrong `kind` value {kind}.')
 
         ddg_pred = torch.stack(ddg_pred)
-        attns = torch.stack(attns)
         if return_attn:
+            attns = torch.stack(attns)
             return ddg_pred, attns
         else:
             return ddg_pred
