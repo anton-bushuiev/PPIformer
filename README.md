@@ -12,23 +12,33 @@ PPIformer is a state-of-the-art predictor of the effects of mutations on protein
 
 Please do not hesitate to contact us or create an issue/PR if you have any questions or suggestions. ✌️
 
-# Web on Hugging Face Spaces 🤗
+## Web on Hugging Face Spaces 🤗
 
 The preview of PPIformer is available via an interactive user interface on Hugging Face Spaces:
 
 [![Model on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-lg-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer)
 
-# Installation
+## Installation
 
-To install PPIformer locally, clone this repository and install the environment (you may need to adjust the versions of the PyTorch-based packages in the script depending on your system):
+**Step 1.** To install PPIformer locally, clone this repository and install the environment (you may need to adjust the versions of the PyTorch-based packages in the script depending on your system):
+
 ```bash
+conda create -n ppiformer python==3.10 -y
+conda activate ppiformer
 git clone https://github.com/anton-bushuiev/PPIformer; cd PPIformer
-. scripts/installation/install.sh
+pip install -e .
 ```
 
-# Inference
+**Step 2.** After installation, you may need to adapt PyTorch to your system. Please see the [official PyTorch
+installation guide](https://pytorch.org/get-started/locally/) for details. For example, if you are using AMD GPUs, you may need to install PyTorch for ROCm:
 
-## Quick ddG prediction
+```bash
+pip install -U torch --index-url https://download.pytorch.org/whl/rocm6.0
+```
+
+## Inference
+
+### Quick ddG prediction
 
 ```python
 import torch
@@ -53,15 +63,15 @@ ddg
 > tensor([-0.3708,  1.5188,  1.1482])
 ```
 
-## Multi-GPU ddG screening
+### Multi-GPU ddG screening
 
 TBD
 
-# Training
+## Training
 
 TBD
 
-# How it works
+## How it works
 
 <p align="center">
   <img src="assets/readme-architecture.png"/>
@@ -69,13 +79,13 @@ TBD
 
 TBD
 
-# TODO
+## TODO
 
 - [ ] Pre-training and fine-tuning examples with `scripts/run.py`
-- [ ] Installation script examples for AMD GPUs and NVIDIA GPUs
+- [x] Installation script examples for AMD GPUs and NVIDIA GPUs
 - [ ] SSL-pretrained weights (without fine-tuning)
 
-# References
+## References
 
 If you find this repository useful, please cite our paper:
 ```

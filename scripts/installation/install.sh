@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# NOTE: This script is obsolete, please use the insturctions in the README.md file.
+
 # Create env
 # conda create -n ppiformer_u python==3.9.17 -y
 conda create -n ppiformer_u python==3.10 -y

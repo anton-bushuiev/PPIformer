@@ -14,6 +14,7 @@ equiformer-pytorch @ git+https://github.com/anton-bushuiev/equiformer-pytorch.gi
 # Training dependencies
 wandb
 hydra-core
+hydra-submitit-launcher
 
 # Install mutils and PPIRef
 mutils @ git+https://github.com/anton-bushuiev/mutils.git@main
