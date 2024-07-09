@@ -43,11 +43,11 @@ pip install -U torch --index-url https://download.pytorch.org/whl/rocm6.0
 ```python
 import torch
 from ppiformer.tasks.node import DDGPPIformer
-from ppiformer.utils.api import download_weights, predict_ddg
+from ppiformer.utils.api import download_from_zenodo, predict_ddg
 from ppiformer.definitions import PPIFORMER_WEIGHTS_DIR, PPIFORMER_TEST_DATA_DIR
 
 # Download the weights
-download_weights()
+download_from_zenodo('weights.zip')
 
 # Load the ensamble of fine-tuned models
 device = 'cpu'

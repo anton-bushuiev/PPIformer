@@ -1,6 +1,8 @@
+import warnings
 import requests
 import zipfile
 import os
+from tqdm import tqdm
 from typing import Sequence, Union
 from pathlib import Path
 from io import StringIO
@@ -13,34 +15,67 @@ from omegaconf import OmegaConf
 from equiformer_pytorch.equiformer_pytorch import MLPAttention, L2DistAttention
 
 from ppiformer.tasks.node import DDGPPIformer
-from ppiformer.definitions import PPIFORMER_WEIGHTS_DIR
+from ppiformer.definitions import PPIFORMER_ROOT_DIR
 
 
-def download_weights(
-    url: str = 'https://zenodo.org/records/10568463/files/ddg_regression.zip',
-    destination_folder: Union[Path, str] = PPIFORMER_WEIGHTS_DIR
+def download_from_zenodo(
+    file: str,
+    project_url: str = 'https://zenodo.org/records/12699751/files/',
+    destination_folder: Union[Path, str] = None
 ) -> None:
+    """
+    Download a file from Zenodo and extract its contents.
+
+    Args:
+        file (str): Name of the file to download and unpack. For example, ``'weights.zip'`` to
+            download all the folder with the weights.
+        project_url (str, optional): URL of the Zenodo project.
+        destination_folder (Union[Path, str], optional): Path to the destination folder. If None, 
+            the folder will be created in the ``ppiref.definitions.PPIFORMER_ROOT_DIR`` directory.
+    """
+    # Create full file url
+    url = project_url + file
     stem = Path(url).stem
 
-    # Create the destination folder if it doesn't exist
-    if not os.path.exists(destination_folder):
-        os.makedirs(destination_folder)
+    if destination_folder is None:
+        destination_folder = PPIFORMER_ROOT_DIR / Path(file).stem
 
-    if (Path(destination_folder) / stem).is_dir():
-        return  # already downloaded
+    # Check if the folder already exists
+    if (destination_folder).is_dir():
+        warnings.warn(f'{destination_folder} already exists. Skipping download.')
+        return
+    
+    # Create the folder
+    destination_folder.mkdir(parents=True, exist_ok=True)
 
-    # Download the file
-    response = requests.get(url)
+    # Download the file with progress bar
+    response = requests.get(url, stream=True)
+    total_size_in_bytes= int(response.headers.get('content-length', 0))
+    block_size = 1024  # 1 Kibibyte
+    progress_bar = tqdm(total=total_size_in_bytes, desc=f'Downloading to {destination_folder}', unit='iB', unit_scale=True)
     file_path = os.path.join(destination_folder, f'{stem}.zip')
-
     with open(file_path, 'wb') as file:
-        file.write(response.content)
+        for data in response.iter_content(block_size):
+            progress_bar.update(len(data))
+            file.write(data)
+    progress_bar.close()
 
-    # Extract the contents of the zip file
+    # Check if the download was successful
+    if total_size_in_bytes != 0 and progress_bar.n != total_size_in_bytes:
+        raise RuntimeError("Download failed. Please try to download the file manually.")
+
+    # Extract the contents of the zip file with progress bar
     with zipfile.ZipFile(file_path, 'r') as zip_ref:
-        zip_ref.extractall(destination_folder)
+        # List of archive contents
+        list_of_files = zip_ref.infolist()
+        total_files = len(list_of_files)
+        # Progress bar for extraction
+        with tqdm(total=total_files, desc="Extracting", unit='files') as pbar:
+            for file in list_of_files:
+                zip_ref.extract(member=file, path=destination_folder)
+                pbar.update(1)
 
-    # Delete the zip file after extraction (optional)
+    # Delete the zip file after extraction
     os.remove(file_path)
 
 
