@@ -59,7 +59,7 @@ device = 'cpu'
 models = [DDGPPIformer.load_from_checkpoint(PPIFORMER_WEIGHTS_DIR / f'ddg_regression/{i}.ckpt', map_location=torch.device(device)).eval() for i in range(3)]
 
 # Specify input
-ppi_path = PPIFORMER_TEST_DATA_DIR / '1bui_A_C.pdb'  # PDB or PPIRef file (see https://github.com/anton-bushuiev/PPIRef?tab=readme-ov-file#extracting-ppis)
+ppi_path = PPIFORMER_TEST_DATA_DIR / '1bui_A_C.pdb'  # PDB or PPIRef file (see https://ppiref.readthedocs.io/en/latest/extracting_ppis.html)
 muts = ['SC16A', 'FC47A', 'SC16A,FC47A']  # List of single- or multi-point mutations
 
 # Predict
