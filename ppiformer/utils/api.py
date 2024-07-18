@@ -111,7 +111,7 @@ def predict_ddg(
     # Instantiate datalaoder from config
     dataloader = hydra.utils.instantiate(
         cfg_dataloader, pretransform=pretransform,
-        skip_data_on_processing_errors=False, dataset_max_workers=1
+        skip_data_on_processing_errors=False, dataset_max_workers=1, fresh=True
     )
 
     # Compatibility with older Equiformer versions
