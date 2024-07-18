@@ -14,6 +14,7 @@ import hydra
 from omegaconf import OmegaConf
 from equiformer_pytorch.equiformer_pytorch import MLPAttention, L2DistAttention
 
+from mutils.mutations import Mutation
 from ppiformer.tasks.node import DDGPPIformer
 from ppiformer.definitions import PPIFORMER_ROOT_DIR
 
@@ -83,8 +84,13 @@ def predict_ddg(
     models: Sequence[DDGPPIformer],
     ppi: Union[Path, str],
     muts: Sequence[str],
-    return_attn: bool = False
+    return_attn: bool = False,
+    impute: bool = False,
+    impute_val: float = 0.691834179286864  # average from the SKEMPI v2.0 training set
 ) -> torch.Tensor:
+    if return_attn and impute_val:
+        raise NotImplementedError('TODO Implement imputation for attention coefficients with zero tensors.')
+
     ppi = Path(ppi)
     assert ppi.is_file()
 
@@ -136,6 +142,13 @@ def predict_ddg(
                 attns.append(attn)
             ddg_pred = torch.stack(ddg_preds).mean(dim=0)
             attns = torch.stack(attns)
+
+    # Impute values for the mutations out of the interaction interface
+    if impute:
+        to_impute = ~torch.tensor([Mutation.from_str(m).wt_in_pdb(ppi) for m in muts])
+        ddg_pred_imputed = torch.full((len(to_impute),), impute_val)
+        ddg_pred_imputed[~to_impute] = ddg_pred
+        ddg_pred = ddg_pred_imputed
 
     # Return attention as a tensor [model, muts, batch, layer, degree, head, node, node]
     if return_attn:
