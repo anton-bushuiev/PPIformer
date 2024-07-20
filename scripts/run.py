@@ -99,11 +99,16 @@ def main(cfg : DictConfig) -> None:
             if 'kind' in cfg.model:
                 model_kwargs['kind'] = cfg.model.kind
         model_class = hydra._internal.utils._locate(cfg.model._target_)
-        model = model_class.load_from_checkpoint(cfg.model.checkpoint_path, strict=False, **model_kwargs)
+        model = model_class.load_from_checkpoint(
+            cfg.model.checkpoint_path,
+            map_location=cfg.model.map_location,
+            strict=False,
+            **model_kwargs
+        )
     else:
         model = hydra.utils.instantiate(cfg.model, **model_kwargs)
 
-    # Init metric checkpoints and other callbacks. By default, the checpointing is done at the end 
+    # Init metric checkpoints and other callbacks. By default, the checkpointing is done at the end 
     # of each training epoch
     callbacks = []
     for i, (monitor, mode) in enumerate(model.get_checkpoint_monitors()):

@@ -36,3 +36,4 @@ pre_encoder_transform_kwargs:
 verbose: false
 
 checkpoint_path: null
+map_location: null
