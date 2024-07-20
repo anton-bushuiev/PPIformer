@@ -21,7 +21,7 @@ from ppiformer.definitions import PPIFORMER_ROOT_DIR
 
 def download_from_zenodo(
     file: str,
-    project_url: str = 'https://zenodo.org/records/12699751/files/',
+    project_url: str = 'https://zenodo.org/records/12789167/files/',
     destination_folder: Union[Path, str] = None
 ) -> None:
     """

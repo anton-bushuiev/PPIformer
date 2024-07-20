@@ -3,7 +3,7 @@
 # PPIformer
 
 [![arXiv badge](https://img.shields.io/badge/arXiv-2310.18515-b31b1b.svg)](https://arxiv.org/abs/2310.18515)
-[![Zenodo badge](https://zenodo.org/badge/DOI/10.5281/zenodo.12699751.svg)](https://doi.org/10.5281/zenodo.12699751)
+[![Zenodo badge](https://zenodo.org/badge/DOI/10.5281/zenodo.12789167.svg)](https://doi.org/10.5281/zenodo.12789167)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer)
 
