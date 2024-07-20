@@ -43,8 +43,6 @@ pip install -U torch --index-url https://download.pytorch.org/whl/rocm6.0
 
 ## Inference
 
-### Quick ddG prediction
-
 ```python
 import torch
 from ppiformer.tasks.node import DDGPPIformer
@@ -68,13 +66,9 @@ ddg
 > tensor([-0.3708,  1.5188,  1.1482])
 ```
 
-### Multi-GPU ddG screening
+## Training and testing
 
-TBD
-
-## Training
-
-TBD
+To train and validate PPIformer, please see `PPIformer/scripts/README.md`. To test the model and reproduce the results from the paper, please see `PPIformer/notebooks/test.ipynb`.
 
 ## How it works
 
@@ -82,13 +76,15 @@ TBD
   <img src="assets/readme-architecture.png"/>
 </p>
 
-TBD
+The model was pre-trained on the [PPIRef](https://github.com/anton-bushuiev/PPIRef) dataset via a coarse-grained structural masked modeling and fine-tuned on the [SKEMPI v2.0](https://life.bsc.es/pid/skempi2) dataset via log odds. 
+
+A single pre-training step starts with randomly sampling a protein-protein interaction <img src="https://latex.codecogs.com/gif.latex?\mathbf{c}" title="\mathbf{c}"/> (in this example figure, the staphylokinase dimer A-B from the PDB entry 1C78) from PPIRef. Next, randomly selected residues <img src="https://latex.codecogs.com/gif.latex?M" title="M"/> are masked to obtain the masked interaction <img src="https://latex.codecogs.com/gif.latex?\mathbf{c}_{\setminus M}" title="\mathbf{c}_{\setminus M}"/>. After that, the interaction is converted into a graph representation <img src="https://latex.codecogs.com/gif.latex?(G,\mathbf{X},\mathbf{E},\mathbf{F}_0,\mathbf{F}_1)" title="(G,\mathbf{X},\mathbf{E},\mathbf{F}_0,\mathbf{F}_1)"/> with masked nodes <img src="https://latex.codecogs.com/gif.latex?M" title="M"/> (black circles). The model subsequently learns to classify the types of masked amino acids by acquiring <img src="https://latex.codecogs.com/gif.latex?SE(3)" title="SE(3)"/>-invariant hidden representation <img src="https://latex.codecogs.com/gif.latex?\mathbf{H}" title="\mathbf{H}"/> of the whole interface via the encoder <img src="https://latex.codecogs.com/gif.latex?f" title="f"/> and classifier <img src="https://latex.codecogs.com/gif.latex?g" title="g"/> (red arrows). On the downstream task of ddG prediction, mutated amino acids are masked, and the probabilities of possible substitutions <img src="https://latex.codecogs.com/gif.latex?\mathbf{P}_{M,:}" title="\mathbf{P}_{M,:}"/> are jointly inferred with the pre-trained model. Finally, the estimate <img src="https://latex.codecogs.com/gif.latex?\widehat{\Delta \Delta G}" title="\widehat{\Delta \Delta G}"/> is obtained using the predicted probabilities <img src="https://latex.codecogs.com/gif.latex?p" title="p"/> of the wild-type <img src="https://latex.codecogs.com/gif.latex?c_i" title="c_i"/> and the mutant <img src="https://latex.codecogs.com/gif.latex?m_i" title="m_i"/> amino acids via log odds (blue arrows).
 
 ## TODO
 
-- [ ] Pre-training and fine-tuning examples with `scripts/run.py`
+- [x] Pre-training and fine-tuning examples with `scripts/run.py`
 - [x] Installation script examples for AMD GPUs and NVIDIA GPUs
-- [ ] SSL-pretrained weights (without fine-tuning)
+- [x] SSL-pretrained weights (without fine-tuning)
 
 ## References
 

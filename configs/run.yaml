@@ -12,14 +12,14 @@ defaults:
     - ddg_regression_val
   - trainer: cpu
   - experiment: null
-  - override hydra/launcher: slurm  # --multirun required to use
+  # - override hydra/launcher: slurm  # --multirun required to use
 
 train_dataloader:
-  dataset: "dips_equidock_cleaned,8"
+  dataset: "skempi2_iclr24_split,16"
 val_dataloader:
-  dataset: "skempi2_cleaned_rde_net,8"
+  dataset: "skempi2_iclr24_split,8"
 
-# wandb params
+# WandB params
 team_name: "ppiformer"
 project_name: "NO_NAME"
 run_name: ""
@@ -27,10 +27,8 @@ tags: []  # override with just a string with comma-separated tags
 job_key: null  # used as slurm job name and wand run_id. Override to resume run
 resume_job_key: null
 
+# Run params
+seed: 3721
 cv: false
 resume: false
-
-seed: 3721
-
-# TODO Remove and create separate test.py
 test: false  # set to true to just run a test on validation data
