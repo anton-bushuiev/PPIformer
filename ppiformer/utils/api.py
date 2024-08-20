@@ -88,7 +88,7 @@ def predict_ddg(
     impute: bool = False,
     impute_val: float = 0.691834179286864  # average from the SKEMPI v2.0 training set
 ) -> torch.Tensor:
-    if return_attn and impute_val:
+    if return_attn and impute:
         raise NotImplementedError('TODO Implement imputation for attention coefficients with zero tensors.')
 
     ppi = Path(ppi)
