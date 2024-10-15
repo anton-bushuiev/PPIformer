@@ -137,6 +137,7 @@ def predict_ddg(
             ddg_preds = []
             attns = []
             for model in models:
+                batch.to(model.device)
                 ddg_pred, attn = model(batch, return_attn=True)
                 ddg_preds.append(ddg_pred)
                 attns.append(attn)
