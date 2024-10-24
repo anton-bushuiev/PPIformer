@@ -6,6 +6,7 @@
 [![Zenodo badge](https://zenodo.org/badge/DOI/10.5281/zenodo.12789167.svg)](https://doi.org/10.5281/zenodo.12789167)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer)
+[![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer-CPU)
 
 </div>
 
@@ -22,6 +23,10 @@ Please do not hesitate to contact us or create an issue/PR if you have any quest
 The preview of PPIformer is available via an interactive user interface on Hugging Face Spaces:
 
 [![Model on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-lg-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer)
+
+The Hugging Face Space above is running using [Zero GPU](https://huggingface.co/zero-gpu-explorers), which is currently in beta. If you experience any issues, please try the CPU-only version below:
+
+[![Model on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-lg-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer-CPU)
 
 ## Installation
 
@@ -53,8 +58,9 @@ from ppiformer.definitions import PPIFORMER_WEIGHTS_DIR, PPIFORMER_TEST_DATA_DIR
 download_from_zenodo('weights.zip')
 
 # Load the ensamble of fine-tuned models
-device = 'cpu'
-models = [DDGPPIformer.load_from_checkpoint(PPIFORMER_WEIGHTS_DIR / f'ddg_regression/{i}.ckpt', map_location=torch.device(device)).eval() for i in range(3)]
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+models = [DDGPPIformer.load_from_checkpoint(PPIFORMER_WEIGHTS_DIR / f'ddg_regression/{i}.ckpt', map_location=torch.device('cpu')).eval() for i in range(3)]
+models = [model.to(device) for model in models]
 
 # Specify input
 ppi_path = PPIFORMER_TEST_DATA_DIR / '1bui_A_C.pdb'  # PDB or PPIRef file (see https://ppiref.readthedocs.io/en/latest/extracting_ppis.html)
