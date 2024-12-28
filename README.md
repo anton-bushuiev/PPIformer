@@ -51,12 +51,18 @@ pip install -U torch --index-url https://download.pytorch.org/whl/rocm6.0
 ```python
 import torch
 from ppiformer.tasks.node import DDGPPIformer
-from ppiformer.utils.api import download_from_zenodo, predict_ddg
+from ppiformer.utils.api import download_from_zenodo, predict_ddg, embed
 from ppiformer.definitions import PPIFORMER_WEIGHTS_DIR, PPIFORMER_TEST_DATA_DIR
 
 # Download the weights
 download_from_zenodo('weights.zip')
+```
 
+### Predict ddG for a PPI upon mutation
+
+PPIformer was fine-tuned on the SKEMPI v2.0 dataset via log odds. The fine-tuned models can be used to predict the binding energy changes (ddG) for a PPI upon mutation.
+
+```python
 # Load the ensamble of fine-tuned models
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 models = [DDGPPIformer.load_from_checkpoint(PPIFORMER_WEIGHTS_DIR / f'ddg_regression/{i}.ckpt', map_location=torch.device('cpu')).eval() for i in range(3)]
@@ -70,6 +76,25 @@ muts = ['SC16A', 'FC47A', 'SC16A,FC47A']  # List of single- or multi-point mutat
 ddg = predict_ddg(models, ppi_path, muts)
 ddg
 > tensor([-0.3708,  1.5188,  1.1482])
+```
+
+### Embed PPI
+
+PPIformer was pre-trained using structural masked modeling. The pre-trained model can be used to obtain PPI embeddings, similar to [BERT embeddings](https://arxiv.org/abs/1810.04805) in natural language processing.
+
+```python
+# Load the pre-trained model
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+model = PPIformer.load_from_checkpoint(PPIFORMER_WEIGHTS_DIR / 'masked_modeling.ckpt', map_location=torch.device('cpu'))
+model = model.to(device).eval()
+
+# Specify input
+ppi_path = PPIFORMER_TEST_DATA_DIR / '1bui_A_C.pdb'  # PDB or PPIRef file (see https://ppiref.readthedocs.io/en/latest/extracting_ppis.html)
+
+# Embed (get the final type-0 features). Here, 128-dimensional embedding for each of 124 amino acids in the PPI
+embedding = embed(model, ppi_path)
+embedding.shape
+> torch.Size([124, 128])
 ```
 
 ## Training and testing

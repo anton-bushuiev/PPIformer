@@ -3,7 +3,7 @@ import requests
 import zipfile
 import os
 from tqdm import tqdm
-from typing import Sequence, Union
+from typing import Sequence, Union, Optional
 from pathlib import Path
 from io import StringIO
 
@@ -155,4 +155,69 @@ def predict_ddg(
     if return_attn:
         return ddg_pred, attns
     return ddg_pred
-    
+
+
+def embed(
+    model: DDGPPIformer,
+    ppi: Optional[Union[Path, str]] = None,
+    ppis: Optional[Sequence[Union[Path, str]]] = None
+) -> torch.Tensor:
+    assert ppi is not None or ppis is not None
+
+    if ppi is not None:
+        ppis = [ppi]
+    ppis = [Path(ppi) for ppi in ppis]
+    assert all(ppi.is_file() for ppi in ppis)
+
+    # Read validation dataloader config used at model training
+    cfg = model.hparams['run_cfg']
+    cfg = OmegaConf.load(StringIO(cfg))
+    cfg_dataloader = dict(cfg.val_dataloader)
+
+    # Replace PPI
+    cfg_dataloader['dataset'] = [str(ppi) for ppi in ppis]
+
+    # Replicate validation pretransforms with the exception of ddG labeling 
+    # (during validation zero-shot ddG is tested, which should be skipped)
+    pretransform = []
+    for t in cfg_dataloader['pretransform']:
+        if t['_target_'] == 'ppiformer.data.transforms.DDGLabelPretransform':
+            continue
+        t = hydra.utils.instantiate(t)
+        pretransform.append(t)
+
+    # Replicate validation prefilters with the exception of ddG labeling 
+    # (during validation zero-shot ddG is tested, which should be skipped)
+    prefilter = []
+    for f in cfg_dataloader['prefilter']:
+        if f['_target_'] == 'ppiformer.data.transforms.DDGLabelPretransform':
+            continue
+        f = hydra.utils.instantiate(f)
+        prefilter.append(f)
+
+    # Replicate validation transforms with the exception of masked modeling
+    transform = []
+    for t in cfg_dataloader['transform']:
+        if t['_target_'] == 'ppiformer.data.transforms.MaskedModelingTransform':
+            continue
+        t = hydra.utils.instantiate(t)
+        transform.append(t)
+
+    # Instantiate datalaoder from config
+    # TODO Remove batch_size=1 and unpack embeddings into list upon forward using batch_idx and PyG
+    dataloader = hydra.utils.instantiate(
+        cfg_dataloader, pretransform=pretransform, prefilter=[],
+        skip_data_on_processing_errors=False, dataset_max_workers=1, fresh=True, batch_size=1
+    )
+
+    # Embed PPI
+    hs = []
+    with torch.inference_mode():
+        for batch in dataloader:  # always a single batch since only one PPI
+            batch.to(model.device)
+            h = model(batch)
+            hs.append(h)
+
+    if ppi is not None:
+        return hs[0]
+    return hs
