@@ -38,7 +38,7 @@ conda activate ppiformer
 git clone https://github.com/anton-bushuiev/PPIformer && pip install -e PPIformer
 ```
 
-**Step 2.** After installation, you may need to adapt PyTorch to your system. Please see the [official PyTorch
+**Step 2. (Optional)** After installation, you may need to adapt PyTorch to your system. Please see the [official PyTorch
 installation guide](https://pytorch.org/get-started/locally/) for details. For example, if you are using AMD GPUs, you may need to install PyTorch for ROCm:
 
 ```bash
