@@ -35,8 +35,7 @@ The Hugging Face Space above is running using [Zero GPU](https://huggingface.co/
 ```bash
 conda create -n ppiformer python==3.10 -y
 conda activate ppiformer
-git clone https://github.com/anton-bushuiev/PPIformer; cd PPIformer
-pip install -e .
+git clone https://github.com/anton-bushuiev/PPIformer && pip install -e PPIformer
 ```
 
 **Step 2.** After installation, you may need to adapt PyTorch to your system. Please see the [official PyTorch
@@ -46,15 +45,13 @@ installation guide](https://pytorch.org/get-started/locally/) for details. For e
 pip install -U torch --index-url https://download.pytorch.org/whl/rocm6.0
 ```
 
-**Step 3. (Optional)** If you are planning to re-train the model or reproduce test results, please
+**Step 3. (Optional)** If you are planning to re-train the model or reproduce test results (see [Training and testing](#training-and-testing) below), please
 clone and install the [ppiref](https://github.com/anton-bushuiev/PPIRef) and [mutils](https://github.com/anton-bushuiev/mutils) packages locally to download the necessary data (i.e., data
 split files and ddG-labeled datasets):
 
 ```bash
-git clone https://github.com/anton-bushuiev/PPIRef
-pip install -e PPIRef
-git clone https://github.com/anton-bushuiev/mutils
-pip install -e mutils
+git clone https://github.com/anton-bushuiev/PPIRef && pip install -e PPIRef
+git clone https://github.com/anton-bushuiev/mutils && pip install -e mutils
 ```
 
 ## Inference
