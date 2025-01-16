@@ -46,6 +46,17 @@ installation guide](https://pytorch.org/get-started/locally/) for details. For e
 pip install -U torch --index-url https://download.pytorch.org/whl/rocm6.0
 ```
 
+**Step 3. (Optional)** If you are planning to re-train the model or reproduce test results, please
+clone and install the [ppiref](https://github.com/anton-bushuiev/PPIRef) and [mutils](https://github.com/anton-bushuiev/mutils) packages locally to download the necessary data (i.e., data
+split files and ddG-labeled datasets):
+
+```bash
+git clone https://github.com/anton-bushuiev/PPIRef
+pip install -e PPIRef
+git clone https://github.com/anton-bushuiev/mutils
+pip install -e mutils
+```
+
 ## Inference
 
 ```python
