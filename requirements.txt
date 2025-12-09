@@ -1,7 +1,7 @@
 # Torch
 torch==2.1.*
 cmake
-torch_geometric==2.4.*
+torch_geometric==2.3.1
 pytorch_lightning==2.0.8
 
 # latest Graphein
