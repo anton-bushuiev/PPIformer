@@ -6,7 +6,7 @@
 [![Zenodo badge](https://zenodo.org/badge/DOI/10.5281/zenodo.12789167.svg)](https://doi.org/10.5281/zenodo.12789167)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer)
-[![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer-CPU)
+<!-- [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer-CPU) -->
 
 </div>
 
@@ -24,9 +24,9 @@ The preview of PPIformer is available via an interactive user interface on Huggi
 
 [![Model on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-lg-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer)
 
-The Hugging Face Space above is running using [Zero GPU](https://huggingface.co/zero-gpu-explorers), which is currently in beta. If you experience any issues, please try the CPU-only version below:
+<!-- The Hugging Face Space above is running using [Zero GPU](https://huggingface.co/zero-gpu-explorers), which is currently in beta. If you experience any issues, please try the CPU-only version below:
 
-[![Model on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-lg-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer-CPU)
+[![Model on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-lg-dark.svg)](https://huggingface.co/spaces/anton-bushuiev/PPIformer-CPU) -->
 
 ## Installation
 
