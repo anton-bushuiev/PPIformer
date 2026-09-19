@@ -6,7 +6,7 @@ pytorch_lightning==2.0.8
 
 # latest Graphein
 # graphein @ git+https://github.com/a-r-j/graphein.git@master
-graphein==1.7.6
+graphein==1.7.7  # 1.7.6 hard-pinned typing-extensions==4.5.0, incompatible with modern gradio/fastapi (need >=4.8); 1.7.7 drops that pin
 
 # Forked equiformer to get attention coefficients
 equiformer-pytorch @ git+https://github.com/anton-bushuiev/equiformer-pytorch.git@main
